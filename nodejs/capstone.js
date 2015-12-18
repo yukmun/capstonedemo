@@ -7,8 +7,10 @@ var value = 1;
 // setup BLE GATT characteristics with descriptors
 var CapstoneCharacteristic = bleno.Characteristic;
 
+
+// need to change UID as requested by mr yap!!! 
 var capstoneCharacteristic = new CapstoneCharacteristic({
-	uuid: '13333333333333333333333333330001',
+	uuid: '13333333333333333333333333330001', //this
 	properties: ['read', 'write'],
 	descriptors: [
       		new bleno.Descriptor({
@@ -32,7 +34,7 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
   		} else if (data.length !== 1) {
     			callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
   		} else {
-    			value = data.readUInt8(0);
+    			value = data.readUInt8(0); //"8" -> reading one byte only, need change to bigger byte
 			console.log('Data written: ' + value);
 			callback(this.RESULT_SUCCESS);
 		}
@@ -43,7 +45,7 @@ var capstoneCharacteristic = new CapstoneCharacteristic({
 var CapstoneService = bleno.PrimaryService;
 
 var capstoneService = new CapstoneService({
-        uuid: '13333333333333333333333333333337',
+        uuid: '13333333333333333333333333333337', ///change.................
         characteristics: [
             capstoneCharacteristic
         ]
@@ -51,7 +53,7 @@ var capstoneService = new CapstoneService({
 
 // start BLE advertising if USB BLE is on
 bleno.on('stateChange', function(state) {
-  if (state === 'poweredOn') {
+  if (state === 'poweredOn') { //change name of capstone project
     bleno.startAdvertising('Capstone Project', ['13333333333333333333333333333337'], function(err) {
       if (err) {
         console.log(err);
